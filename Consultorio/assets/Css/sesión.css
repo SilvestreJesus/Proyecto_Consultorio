@@ -1,0 +1,210 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+
+.background img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.6);
+}
+
+.entrar-icon {
+  width: 35px; 
+  height: 35px;
+  margin-right: 8px; 
+  vertical-align: middle; 
+  clip-path: circle(50% at 50% 50%);
+}
+
+
+.login-form {
+  background: rgba(255, 255, 255, 0.377);
+  border-radius: 10px;
+  padding: 20px 30px;
+  max-width: 400px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  
+  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ff8b2c
+}
+
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #454749;
+
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #000000;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #ff8b2c;
+}
+
+
+.input-group input::placeholder {
+  color: #454749;;
+  
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.options a {
+  color: #ff8b2c;
+  
+  text-decoration: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff8b2c;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ca9f28;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+p a {
+  color: #ff8b2c;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+
+
+#menu a{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  color: white; 
+  font-size: 30px;
+  text-decoration: none;
+  z-index: 1001;
+}
+#menu a:hover {
+  color: #ff8b2c;
+}
+
+
+
+
+#sidebar.active {
+  left: 0;
+}
+
+
+#loginContainer.shifted {
+  transform: translateX(250px);
+}
+
+
+
+.forgot-password {
+  font-weight: bold;
+}
+
+
+.modalOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modalBox {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(221, 218, 218, 0.877);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+.modalBox p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.modalBox button {
+  padding: 10px 20px;
+  background-color: #ff8b2c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modalBox button:hover {
+  background-color: #ca9f28;
+}

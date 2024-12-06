@@ -1,0 +1,129 @@
+/* Reseteo de márgenes, rellenos y establecer box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+
+    scroll-behavior: smooth;
+    top:30px;
+}
+
+/* Estilo del cuerpo */
+body {
+    margin: 0;
+    padding: 10px;
+    overflow: auto; /* Habilita las barras de desplazamiento */
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
+}
+
+/* Contenedor principal con fondo y sombra */
+.container {
+    max-width: 2000px; /* Ancho mayor para más espacio */
+    margin: auto;
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Estilo de título */
+h2 {
+    text-align: center;
+    color: #ff8b2c;
+    margin-bottom: 20px;
+}
+
+/* Estilo de los datos */
+.user-data {
+    background: rgba(255, 255, 255, 0.7); /* Fondo blanco translúcido */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Estilo de cada dato individual */
+.data-item {
+    margin: 20px 0; /* Aumenta el espacio entre los datos */
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+/* Estilo para las etiquetas */
+.data-item label {
+    font-weight: bold;
+}
+
+/* Fondo de la página */
+.background img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.6);
+}
+
+/* Estilo del botón de seleccionar */
+.select-btn {
+    font-weight: bold; /* Negrita */
+    color: #fff;
+    background-color: #ff8b2c;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none; /* Eliminar subrayado */
+    display: inline-block; /* Hacerlo en línea como botón */
+    transition: background-color 0.3s ease;
+}
+
+.select-btn:hover {
+    background-color: #ca9f28; /* Cambio de color al pasar el ratón */
+    text-decoration: none; /* Eliminar subrayado en hover */
+}
+
+/* Icono circular */
+.entrar-icon {
+    width: 35px; 
+    height: 35px;
+    margin-right: 8px; 
+    vertical-align: middle; 
+    clip-path: circle(50% at 50% 50%);
+}
+
+/* Estilo del contenedor del icono */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Estilo del icono */
+.icon {
+    width: 55px;
+    height: 55px;
+    clip-path: circle(50% at 50% 50%);
+}
+
+/* Estilo de las filas de la tabla */
+.overflow table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.overflow table th, .overflow table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.overflow table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}

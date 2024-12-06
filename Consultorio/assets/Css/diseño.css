@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #a4d7a3;
+    color: #fff;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column; /* Cambiar a columna para que el título esté encima */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* Reducido el padding para dar más espacio al título */
+    max-width: 550px;
+    margin: auto; /* Centrar horizontalmente */
+    position: absolute;
+    top: 50%; /* Centrar verticalmente */
+    left: 25%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%);
+    color: #333;
+}
+
+.product-info {
+    margin-left: 0;
+    flex: 1;
+}
+
+.product-info h2 {
+    font-size: 1.8em; /* Aumenté el tamaño para darle más protagonismo */
+    margin-bottom: 10px;
+    margin-top: 0; /* Aseguramos que no haya espacio superior innecesario */
+    text-align: center; /* Centrado */
+}
+
+.description {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: justify; /* Justificar el texto */
+}
+
+
+
+.size-selector {
+    margin-bottom: 15px;
+}
+
+.sizes button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sizes button.selected {
+    background-color: #ff8b2c;
+    color: #fff;
+}
+
+.sizes button:hover {
+    background-color: #ff8b2c;
+    color: #fff;
+}
+
+.add-to-cart {
+    background-color: #ff8b2c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #e0731b;
+}
+
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: rgba(4, 5, 12, 0.7); 
+}
+
+header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1em;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #ff8b2c;
+}
+
+.hero h1 {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.hero span {
+    color: #ff8b2c;
+}
+
+.hero p {
+    margin: 20px auto;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.explore-button {
+    padding: 10px 30px;
+    background-color: #ff8b2c;
+    color: #04050c;
+    font-size: 1em;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.explore-button:hover {
+    background-color: #ff8b2c;
+}
+
+
+.entrar-link {
+    display: relative; 
+
+}
+
+
+
+.entrar-icon {
+    width: 25px; 
+    height: 25px;
+    margin-right: 8px; 
+    vertical-align: middle; 
+    clip-path: circle(50% at 50% 50%);
+}
