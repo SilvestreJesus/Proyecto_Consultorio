@@ -1,0 +1,145 @@
+/* Reseteo de márgenes, rellenos y establecer box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo del cuerpo */
+body {
+    margin: 0;
+    padding: 50px;
+}
+
+/* Contenedor principal con fondo y sombra */
+.container {
+    max-width: 1000px; /* Ancho mayor para más espacio */
+    margin: auto;
+    background: rgba(255, 255, 255, 0.7); /* Fondo translúcido */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+/* Fondo de la página */
+.background img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.6);
+}
+
+/* Título del calendario */
+.container h1 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #ff8b2c;
+    text-align: center;
+}
+
+/* Estilo del botón de seleccionar */
+.select-btn {
+    font-weight: bold; /* Negrita */
+   
+    background-color: #ff8b2c;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none; /* Eliminar subrayado */
+    display: inline-block; /* Hacerlo en línea como botón */
+    transition: background-color 0.3s ease;
+}
+
+.select-btn:hover {
+    background-color: #ca9f28; /* Cambio de color al pasar el ratón */
+    text-decoration: none; /* Eliminar subrayado en hover */
+}
+
+/* Icono circular */
+.entrar-icon {
+    width: 35px; 
+    height: 35px;
+    margin-right: 8px; 
+    vertical-align: middle; 
+    clip-path: circle(50% at 50% 50%);
+}
+
+/* Estilo del contenedor del icono */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Estilo del icono */
+.icon {
+    width: 55px;
+    height: 55px;
+    clip-path: circle(50% at 50% 50%);
+}
+
+
+/* Estilo del calendario */
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #4646468f;
+    font-size: 1em;
+    color: #080808;
+    cursor: pointer;
+}
+
+.day.inactive {
+    background: #4646468f;
+    color: #080808;
+    cursor: not-allowed;
+}
+
+.day.today {
+    background: #ff8b2c;
+    color: white;
+    font-weight: bold;
+}
+
+.day:hover {
+    background: #ff8b2c;
+    color: rgb(0, 0, 0);
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.calendar-nav button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff8b2c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-nav button:hover {
+    background-color: #ff8b2c;
+}

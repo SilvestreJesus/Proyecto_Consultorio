@@ -31,16 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'fecha_cita' => $fecha_cita,
             'hora_cita' => $hora_cita,
         ]);
-
-        $_SESSION['mensaje'] = "Datos actualizados con éxito.";
-        $_SESSION['tipo_mensaje'] = "success"; // Para diferenciar tipos de mensajes
     } catch (PDOException $e) {
         $_SESSION['mensaje'] = "Error al actualizar: " . htmlspecialchars($e->getMessage());
         $_SESSION['tipo_mensaje'] = "error";
     }
 
     // Redirige de nuevo a la misma página
-    header('Location: atender_citas.php');  
+    header('Location: citas_agendadas.php');   
     exit;
 }
   

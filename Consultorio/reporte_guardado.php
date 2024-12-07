@@ -146,9 +146,40 @@ if (isset($_SESSION['mensaje'])) {
                     <textarea name="medicamentos" rows="5" cols="61" 
                         style="font-size: 16px; padding: 15px;"><?= htmlspecialchars($medicamentos); ?></textarea>
                 </div>
+                <div class="form-group-grouped">
+                    <div class="form-group left">
+                        <a href="expediente.php?curp_pac=<?= urlencode($curp_pac); ?>&nombre=<?= urlencode($nombre_pac); ?>&apellido_p=<?= urlencode($apellido_p_pac); ?>&apellido_m=<?= urlencode($apellido_m_pac); ?>&fecha_cita=<?= urlencode($fecha_cita); ?>&hora_cita=<?= urlencode($hora_cita); ?>" class="select-btn">
+                            <button type="button">Expediente</button> 
+                        </a>
+                    </div>
 
-                <button type="submit">Guardar Cambios</button>
+                    <div class="form-group right">
+                        <button type="submit">Guardar Cambios</button>
+                     </div>
+                </div>
             </form>
+            <div id="error-message" style="color: red;"></div>
+            <script>
+                document.querySelector('form').addEventListener('submit', function (event) {
+                    const diagnostico = document.querySelector('[name="diagnostico"]').value.trim();
+                    const medicamentos = document.querySelector('[name="medicamentos"]').value.trim();
+                    const errorMessage = document.getElementById('error-message');
+
+                    // Solo mostrar el error si el botón que se ha presionado es "Guardar Cambios"
+                    const isSaveButtonClicked = event.submitter && event.submitter.type === 'submit' && event.submitter.textContent === 'Guardar Cambios';
+
+                    if (isSaveButtonClicked) {
+                        if (!diagnostico || !medicamentos) {
+                            errorMessage.textContent = 'Por favor, complete todos los campos antes de guardar.';
+                            event.preventDefault(); // Prevenir el envío del formulario
+                        } else {
+                            errorMessage.textContent = ''; // Limpiar mensajes anteriores si la validación es correcta
+                        }
+                    }
+                });
+            </script>
+
+
         </div>
     </main>
 </body>

@@ -2,6 +2,20 @@
 require_once 'inc/db.php';
 session_start();
 
+// Obtener los valores de día, mes y año desde la URL
+$selectedDay = isset($_GET['day']) ? $_GET['day'] : null;
+$selectedMonth = isset($_GET['month']) ? $_GET['month'] : null;
+$selectedYear = isset($_GET['year']) ? $_GET['year'] : null;
+
+// Validar que todos los parámetros de fecha estén presentes
+if ($selectedDay && $selectedMonth && $selectedYear) {
+    $selectedDate = "$selectedYear-$selectedMonth-$selectedDay"; // Formato YYYY-MM-DD
+} else {
+    echo "No se seleccionó una fecha válida.";
+    exit;
+}
+
+
 // Verificar si el médico ha iniciado sesión
 if (!isset($_SESSION['usuario']['curp']) || $_SESSION['usuario']['rol'] !== 'medico') {
     $_SESSION['error'] = "Debe iniciar sesión como médico para acceder.";
@@ -15,20 +29,23 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Consulta para seleccionar las citas del médico actual, donde diagnóstico y medicamentos son 'N/A'
-    $stmt = $pdo->prepare('
+      $stmt = $pdo->prepare('
         SELECT u.curp, u.nombre, u.apellido_p, u.apellido_m, c.fecha_cita, c.hora_cita
         FROM usuario u
         INNER JOIN cita c ON u.curp = c.curp_pac
         WHERE c.curp_med = :curp_med
+        AND c.fecha_cita = :selectedDate
         AND (c.diagnostico = :diagnostico OR c.diagnostico IS NULL)
         AND (c.medicamentos = :medicamentos OR c.medicamentos IS NULL)
     ');
-    
+
     $stmt->execute([
         'curp_med' => $curp_med,
+        'selectedDate' => $selectedDate,
         'diagnostico' => 'N/A',
         'medicamentos' => 'N/A'
     ]);
+
 
     $patients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

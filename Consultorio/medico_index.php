@@ -18,7 +18,7 @@
                 <a href="#us">Nosotros</a>
                 <a href="#reseñas">Reseñas</a>
                 <a href="#contact">Contacto</a>
-                <a href="atender_citas.php">Agenda</a>
+                <a href="citas_agendadas.php">Agenda</a>
                 <a href="reportes.php">Reportes</a>
                 <a href="datos_medico.php">Perfil</a>               
                 <a href="logout.php">Salir</a>

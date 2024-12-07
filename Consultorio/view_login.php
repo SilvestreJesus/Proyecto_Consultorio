@@ -50,12 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     exit;
                 } else {
-                    $_SESSION['error'] = "Contraseña incorrecta.";
+                    $_SESSION['error'] = "Error.";
                     header('Location: login.php');
                     exit;
                 }
             } else {
-                $_SESSION['error'] = "Correo no encontrado.";
+                $_SESSION['error'] = "Error.";
                 header('Location: login.php');
                 exit;
             }
