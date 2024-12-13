@@ -14,7 +14,7 @@ body {
 
 /* Contenedor principal con fondo y sombra */
 .container {
-    max-width: 1000px; /* Ancho mayor para más espacio */
+    max-width: 1600px; /* Ancho mayor para más espacio */
     margin: auto;
     background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
     padding: 30px;

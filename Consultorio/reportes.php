@@ -14,74 +14,141 @@ $curp_med = $_SESSION['usuario']['curp'];
 try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Consulta para seleccionar las citas del médico actual, donde diagnóstico y medicamentos son 'N/A'
+    // Consulta para obtener los pacientes atendidos por el médico
     $stmt = $pdo->prepare('
-        SELECT u.curp, u.nombre, u.apellido_p, u.apellido_m, c.fecha_cita, c.hora_cita, c.hora_fin, c.sintomas, c.diagnostico, c.medicamentos
+        SELECT DISTINCT u.curp, u.nombre, c.fecha_cita
         FROM usuario u
         INNER JOIN cita c ON u.curp = c.curp_pac
         WHERE c.curp_med = :curp_med
-        AND c.diagnostico != :diagnostico
         AND c.diagnostico IS NOT NULL
-        AND c.medicamentos != :medicamentos
         AND c.medicamentos IS NOT NULL
+        ORDER BY c.fecha_cita DESC
     ');
-        
-    $stmt->execute([
-        'curp_med' => $curp_med,
-        'diagnostico' => 'N/A',
-        'medicamentos' => 'N/A'
-    ]);
-
-    $patients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $stmt->execute(['curp_med' => $curp_med]);
+    $patients_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    echo "Error al obtener las citas: " . htmlspecialchars($e->getMessage());
+    echo "Error al obtener los datos: " . htmlspecialchars($e->getMessage());
     exit;
 }
 ?>
 
 <?php include_once 'inc/datos_medico.php'; ?>
 <link rel="stylesheet" href="assets/Css/reporte.css">
+<style>
+    /* Estilo general para los selectores y botones */
+    select {
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    button {
+        background-color: #ff8b2c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+        background-color: #ff8b2c;
+        transform: scale(1.05);
+    }
+
+    button:active {
+        background-color: #ff8b2c;
+        transform: scale(1);
+    }
+
+    label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    div {
+        margin-bottom: 20px;
+    }
+</style>
+
 <h2>Reportes</h2>
 
-<div class="overflow">
+<!-- Dropdown para nombres de pacientes -->
+<div>
+    <label for="nombre_doctor">Paciente:</label>
+    <select id="nombre_doctor">
+        <option value="">Selecciona un paciente...</option>
+        <?php foreach ($patients_data as $data): ?>
+            <option value="<?= htmlspecialchars($data['nombre']); ?>">
+                <?= htmlspecialchars($data['nombre']); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <button id="filtrar_nombre">Filtrar por Paciente</button>
+</div>
+
+<!-- Dropdown para fechas -->
+<div>
+    <label for="fecha">Fecha:    </label>
+    <select id="fecha">
+        <option value="">Selecciona una fecha...</option>
+        <?php 
+        // Extraer las fechas únicas de las citas
+        $fechas = array_unique(array_column($patients_data, 'fecha_cita'));
+        foreach ($fechas as $fecha): ?>
+            <option value="<?= htmlspecialchars($fecha); ?>">
+                <?= htmlspecialchars($fecha); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <button id="filtrar_fecha">Filtrar por Fecha</button>
+</div>
+
+<div class="overflow" id="table">
   <table>
     <thead>
       <tr>
         <th>CURP</th>
         <th>Nombre</th>
-        <th> </th>
-        <th> </th>
         <th>Fecha</th>
-        <th>Hora Inicio</th>
-        <th>Hora Fin</th>
-        <th>Sintomas</th>
-        <th>Diagnostico</th>
-        <th>Medicamento</th>
       </tr>
     </thead>
-    <tbody>
-        <?php if ($patients): ?>
-        <?php foreach ($patients as $patient): ?>
+    <tbody id="tabla_resultados">
+        <?php foreach ($patients_data as $data): ?>
         <tr>
-            <td><?= htmlspecialchars($patient['curp']); ?></td>
-            <td><?= htmlspecialchars($patient['nombre']); ?></td>
-            <td><?= htmlspecialchars($patient['apellido_p']); ?></td>
-            <td><?= htmlspecialchars($patient['apellido_m']); ?></td>
-            <td><?= htmlspecialchars($patient['fecha_cita']); ?></td>
-            <td><?= htmlspecialchars($patient['hora_cita']); ?></td>
-            <td><?= htmlspecialchars($patient['hora_fin']); ?></td>
-            <td><?= htmlspecialchars($patient['sintomas']); ?></td>
-            <td><?= htmlspecialchars($patient['diagnostico']); ?></td>
-            <td><?= htmlspecialchars($patient['medicamentos']); ?></td>
+            <td><?= htmlspecialchars($data['curp']); ?></td>
+            <td><?= htmlspecialchars($data['nombre']); ?></td>
+            <td><?= htmlspecialchars($data['fecha_cita']); ?></td>
         </tr>
         <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="10">No hay reportes con diagnóstico y medicamentos completos.</td>
-        </tr>
-    <?php endif; ?>
-
     </tbody>
   </table>
 </div>
+
+<script>
+    document.getElementById('filtrar_nombre').addEventListener('click', function() {
+        const nombre = document.getElementById('nombre_doctor').value.toLowerCase();
+        const filas = document.querySelectorAll('#tabla_resultados tr');
+
+        filas.forEach(fila => {
+            const nombreFila = fila.children[1].textContent.toLowerCase();
+            fila.style.display = nombre && !nombreFila.includes(nombre) ? 'none' : '';
+        });
+    });
+
+    document.getElementById('filtrar_fecha').addEventListener('click', function() {
+        const fecha = document.getElementById('fecha').value;
+        const filas = document.querySelectorAll('#tabla_resultados tr');
+
+        filas.forEach(fila => {
+            const fechaFila = fila.children[2].textContent;
+            fila.style.display = fecha && fechaFila !== fecha ? 'none' : '';
+        });
+    });
+</script>

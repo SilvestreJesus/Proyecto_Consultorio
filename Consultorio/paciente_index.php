@@ -10,7 +10,7 @@
 <body>
     <!-- Encabezado -->
     <header class="header">
-        <div class="logo">Bienestar Médico </div>
+        <div class="logo">Paciente </div>
         <nav class="nav">
             <div class="nav-links">
                 <a href="#home">Inicio</a>

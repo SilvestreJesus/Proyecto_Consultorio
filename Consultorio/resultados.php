@@ -25,6 +25,7 @@ try {
         AND c.diagnostico IS NOT NULL
         AND c.medicamentos != :medicamentos
         AND c.medicamentos IS NOT NULL
+        ORDER BY c.fecha_cita DESC, c.hora_cita DESC
     ');
 
     $stmt->execute([

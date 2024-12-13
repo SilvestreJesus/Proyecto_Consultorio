@@ -1,5 +1,4 @@
-/* Reseteo de márgenes, rellenos y establecer box-sizing */
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -122,4 +121,85 @@ h2 {
 .overflow table th {
     background-color: #f8f8f8;
     font-weight: bold;
+}
+
+
+
+.services {
+    padding-top: 40px;
+    
+}
+
+.services h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #ff8b2c;
+    margin-bottom: 50px;
+}
+
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(1000px, 2fr));
+    gap: 30px;
+}
+
+.service-card {
+    background: #fff;
+    box-shadow: 0 4px 40px #000000;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+
+.service-info {
+    padding: 15px;
+    text-align: center;
+}
+
+/* Estilo para la fila de fecha y horas en una sola línea */
+.row {
+    display: flex;
+    justify-content: flex-start; /* Alinea los elementos al inicio */
+    align-items: center;
+    gap: 0px; /* Espaciado entre los elementos */
+    margin-bottom: 10px;
+}
+/* Ajustar el espaciado y apariencia de los elementos dentro de la fila */
+.row h3 {
+    margin: 0 10px 0 0;
+    font-size: 1rem;
+    color: #ff8b2c;
+}
+
+.row p {
+    margin: 0 15px;
+    font-size: 1rem;
+    color: #080808;
+}
+.row2 {
+    display: flex;
+    justify-content: flex-start; /* Alinea los elementos al inicio */
+    align-items: center;
+    gap: 0px; /* Espaciado entre los elementos */
+    margin-bottom: 20px;
+}
+
+
+/* Estilo general del contenido restante */
+.service-info h3 {
+    font-size: 1.2rem;
+    color: #ff8b2c;
+    margin-bottom: 5px;
+}
+
+.service-info p {
+    font-size: 1rem;
+    color: #080808;
+    margin-bottom: 10px;
 }
