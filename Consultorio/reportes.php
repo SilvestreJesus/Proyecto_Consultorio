@@ -14,18 +14,24 @@ $curp_med = $_SESSION['usuario']['curp'];
 try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Consulta para obtener los pacientes atendidos por el médico
+    // Consulta para obtener los detalles de las citas atendidas por el médico
     $stmt = $pdo->prepare('
-        SELECT DISTINCT u.curp, u.nombre, c.fecha_cita
+        SELECT DISTINCT u.curp, u.nombre, u.apellido_p, u.apellido_m, c.fecha_cita, c.hora_cita, c.hora_fin, c.sintomas, c.diagnostico, c.medicamentos
         FROM usuario u
         INNER JOIN cita c ON u.curp = c.curp_pac
         WHERE c.curp_med = :curp_med
         AND c.diagnostico IS NOT NULL
+        AND c.diagnostico != :diagnostico
         AND c.medicamentos IS NOT NULL
+        AND c.medicamentos != :medicamentos
         ORDER BY c.fecha_cita DESC
     ');
-    
-    $stmt->execute(['curp_med' => $curp_med]);
+
+    $stmt->execute([
+        'curp_med' => $curp_med,
+        'diagnostico' => 'N/A',
+        'medicamentos' => 'N/A'
+    ]);
     $patients_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
@@ -37,7 +43,6 @@ try {
 <?php include_once 'inc/datos_medico.php'; ?>
 <link rel="stylesheet" href="assets/Css/reporte.css">
 <style>
-    /* Estilo general para los selectores y botones */
     select {
         padding: 8px;
         margin-right: 10px;
@@ -58,12 +63,12 @@ try {
     }
 
     button:hover {
-        background-color: #ff8b2c;
+        background-color: #e6731a;
         transform: scale(1.05);
     }
 
     button:active {
-        background-color: #ff8b2c;
+        background-color: #cc5d14;
         transform: scale(1);
     }
 
@@ -86,7 +91,7 @@ try {
         <option value="">Selecciona un paciente...</option>
         <?php foreach ($patients_data as $data): ?>
             <option value="<?= htmlspecialchars($data['nombre']); ?>">
-                <?= htmlspecialchars($data['nombre']); ?>
+                <?= htmlspecialchars($data['nombre']); ?> <?= htmlspecialchars($data['apellido_p']); ?> <?= htmlspecialchars($data['apellido_m']); ?>
             </option>
         <?php endforeach; ?>
     </select>
@@ -95,11 +100,10 @@ try {
 
 <!-- Dropdown para fechas -->
 <div>
-    <label for="fecha">Fecha:    </label>
+    <label for="fecha">Fecha:</label>
     <select id="fecha">
         <option value="">Selecciona una fecha...</option>
         <?php 
-        // Extraer las fechas únicas de las citas
         $fechas = array_unique(array_column($patients_data, 'fecha_cita'));
         foreach ($fechas as $fecha): ?>
             <option value="<?= htmlspecialchars($fecha); ?>">
@@ -116,17 +120,38 @@ try {
       <tr>
         <th>CURP</th>
         <th>Nombre</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
         <th>Fecha</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Síntomas</th>
+        <th>Diagnóstico</th>
+        <th>Medicamentos</th>
       </tr>
     </thead>
     <tbody id="tabla_resultados">
+        <?php if ($patients_data): ?>
         <?php foreach ($patients_data as $data): ?>
         <tr>
             <td><?= htmlspecialchars($data['curp']); ?></td>
             <td><?= htmlspecialchars($data['nombre']); ?></td>
+            <td><?= htmlspecialchars($data['apellido_p']); ?></td>
+            <td><?= htmlspecialchars($data['apellido_m']); ?></td>
             <td><?= htmlspecialchars($data['fecha_cita']); ?></td>
+            <td><?= htmlspecialchars($data['hora_cita']); ?></td>
+            <td><?= htmlspecialchars($data['hora_fin']); ?></td>
+            <td><?= htmlspecialchars($data['sintomas']); ?></td>
+            <td><?= htmlspecialchars($data['diagnostico']); ?></td>
+            <td><?= htmlspecialchars($data['medicamentos']); ?></td>
         </tr>
         <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="10">No hay reportes con diagnóstico y medicamentos completos.</td>
+        </tr>
+    <?php endif; ?>
+
     </tbody>
   </table>
 </div>
@@ -137,7 +162,7 @@ try {
         const filas = document.querySelectorAll('#tabla_resultados tr');
 
         filas.forEach(fila => {
-            const nombreFila = fila.children[1].textContent.toLowerCase();
+            const nombreFila = fila.children[1].textContent.toLowerCase() + ' ' + fila.children[2].textContent.toLowerCase() + ' ' + fila.children[3].textContent.toLowerCase();
             fila.style.display = nombre && !nombreFila.includes(nombre) ? 'none' : '';
         });
     });
@@ -147,7 +172,7 @@ try {
         const filas = document.querySelectorAll('#tabla_resultados tr');
 
         filas.forEach(fila => {
-            const fechaFila = fila.children[2].textContent;
+            const fechaFila = fila.children[4].textContent;
             fila.style.display = fecha && fechaFila !== fecha ? 'none' : '';
         });
     });
